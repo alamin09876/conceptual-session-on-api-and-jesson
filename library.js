@@ -1,13 +1,25 @@
+document.getElementById('error-message').style.display = "none";
+document.getElementById('spinner-field').style.display = "none";
 const searchBook = () =>{
     const inputField = document.getElementById("input-field");
     const inputValue = inputField.value;
-    console.log(inputValue);
-    fetch(`http://openlibrary.org/search.json?q=${inputValue}`)
-    .then(response => response.json())
-    .then(data => displayBooksDetails(data.docs))
+    if(inputValue === ""){
+        document.getElementById('error-message').style.display = 'block';
+    }else{
+
+        console.log(inputValue);
+        document.getElementById('spinner-field').style.display = "block";
+        fetch(`http://openlibrary.org/search.json?q=${inputValue}`)
+        .then(response => response.json())
+        .then(data => displayBooksDetails(data.docs))
+    }
 }
 
 const displayBooksDetails = (books) =>{
+    document.getElementById('error-message').style.display = 'none';
+    document.getElementById('spinner-field').style.display = "none";
+    document.getElementById('heading').style.display = "none";
+
     const searchResult = document.getElementById("search-result")
     searchResult.innerHTML = ``;
     books.forEach(singleBook =>{
